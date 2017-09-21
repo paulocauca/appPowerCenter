@@ -1,0 +1,23 @@
+doctype 5
+html
+  head 
+    meta(http-equiv="content-type", content="#{contentType}; charset=UTF-8")
+    title= title
+    script(type='text/javascript', src='/javascripts/jquery-3.0.0.min.js')
+    link(rel='stylesheet', href='/stylesheets/bootstrap.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap-theme.css')
+    script(type='text/javascript', src='/javascripts/bootstrap.js')
+    script(type='text/javascript', src='/javascripts/geral.js', charset="UTF-8")
+    script(type='text/javascript', src='/javascripts/package.js', charset="UTF-8")
+    script(type='text/javascript', src='/javascripts/ambProducao.js', charset="UTF-8")
+body
+  div(class="row")
+   div(class="col-sm-12")
+     nav(class="navbar navbar-default" role="navigation" role="navigation")
+      div(class="container-fluid")
+        a(class="navbar-brand" href="/") Home
+        if session.userInf.equipe == 'BI_PRODUCAO'
+          button(id="idNovoPacote" class="btn btn-default navbar-btn" href="#") Criar Pacote
+        a(class="btn btn-default navbar-btn" href="/ambProducao") Ambiente Produção
+        a(class="navbar-brand") Bem vindo(a), #{name}
+block content

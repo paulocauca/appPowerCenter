@@ -1,0 +1,135 @@
+extends layout
+
+block content
+
+  div(class="row bg-info")
+   div(class="col-sm-11")
+    table(class="table")
+     tr
+      td
+         a(class="list-group-item" onClick="location.href = '#'") Número do Pacote
+          span(id="spanNumPackage", class="badge") #{JSON.parse(package)[0]._id}
+          input(id="idNumPkge" type="hidden" disabled="disable" value="#{JSON.parse(package)[0]._id}")
+      td
+         a(class="list-group-item" onClick="location.href = '#'") Source
+          span(id="spanSource", class="badge") 0
+      td
+         a(class="list-group-item" onClick="location.href = '#'") Target
+          span(id="spanTarget", class="badge") 0
+      td
+         a(class="list-group-item" onClick="location.href = '#'") Mapping
+          span(id="spanMapping", class="badge") 0
+      td
+         a(class="list-group-item" onClick="location.href = '#'") Workflow
+          span(id="spanWorkflow" ,class="badge") 0
+      td
+          input(class="list-group-item" type="input" placeholder="RDM")
+      td 
+        select(id="statusPackage" onChange="changeStatusPackage()" class="list-group-item")
+          if(JSON.parse(package)[0].status)
+           option(selected=JSON.parse(package)[0].status == 'Desenvolvimento') Desenvolvimento
+           option(selected=JSON.parse(package)[0].status == 'Entrega Produção') Entrega Produção
+           option(selected=JSON.parse(package)[0].status == 'Implantado' disabled=session.userInf.equipe != 'BI_PRODUCAO')  Implantado
+          else
+           option(value='Desenvolvimento') Desenvolvimento
+           option(value= 'Entrega Produção') Entrega Produção
+           option(value='Implantado' disabled=session.userInf.equipe != 'BI_PRODUCAO')  Implantado
+      td
+        button(id="btnApperPkge" class="list-group-item" type="button")
+         span(id="spanAddInfra" class="glyphicon glyphicon-plus")
+  div(align="center" id="statusRequest")
+  div(class="row" id="divAdd" style="display: none")
+   div(class="col-sm-8 col-sm-offset-2")
+    form(class="form-inline")
+     table(class="table-responsive")
+      tr
+       td
+        div(class="form-group")
+         label Ambiente Origem
+       td
+         select(id="ambienteOrigem" class="form-control")
+          option(value="") >>>>>> Escolha <<<<<<
+          option(value="ambDesenvolvimento")  Desenvolvimento
+      tr
+       td
+        div(class="form-group")
+         label Ambiente Destino
+       td
+         select(id="ambienteDestino" class="form-control")
+          option(value="") >>>>>> Escolha <<<<<<
+          option(value="ambProducaoBI")  Prod. BI
+          option(value="ambProducaoDep") Prod. Departamental
+      tr
+       td
+        div(class="form-group")
+         label Origem dos Dados
+       td
+         select(id="foldersIDOrigem" class="form-control")
+          option(value="") >>>>>> Escolha <<<<<<
+      tr
+       td
+        div(class="form-group")
+         label Destino dos Dados
+       td
+         select(id="foldersIDdestino" class="form-control")
+          option(value="") >>>>>> Escolha <<<<<<
+      tr
+       td
+        div(class="form-group")
+          label Tipo Objeto
+       td
+          select(id="tipoObjetoID" class="form-control")
+           option(value="") >>>>>> Escolha <<<<<<
+           option(value="Source") Source
+           option(value="Target") Target
+           option(value="Mapping") Mapping
+           option(value="Workflow") Workflow
+      tr
+       td
+        div(class="form-group")
+         label Objetos
+       td
+         select(id="objetosID" class="form-control")
+           option(value="") >>>>>> Escolha <<<<<<
+      tr
+       td
+        div(class="form-group")
+         label Replace ?
+       td
+         input(type="checkbox" class="form-control" id="replaceObjeto" name="replaceObjeto" checked="checked") 
+      tr
+       td
+         button(id="btnAddPkge" class="btn btn-danger" type="button" disabled="disabled") Adicionar Objeto
+   div(class="col-sm-12")
+    div(class="panel panel-default")
+     div(id="infObjeto")
+
+  div(class="row")
+   div(class="col-sm-12")
+    div(class="panel panel-default")
+     div(class="panel-heading")
+      h3(class="panel-title")  Package :  #{JSON.parse(package)[0]._id}   Owner : #{JSON.parse(package)[0].owner}  Status : #{JSON.parse(package)[0].status}
+     div(class="panel-body")
+      table(class="table")
+       th Ambiente Origem
+       th Ambiente Destino
+       th Folder Origem
+       th Folder Destino
+       th Tipo Objeto
+       th Nome Objeto 
+       th Versão
+       th Replace
+       th 
+       each pkg, i in JSON.parse(package)[0].objetos
+        tr
+         td #{pkg.ambOrigem}
+         td #{pkg.ambDestino}
+         td #{pkg.folderOrigem}
+         td #{pkg.folderDestino}
+         td #{pkg.tipoObjeto}
+         td #{pkg.nomeObjeto}
+         td #{pkg.versao}
+         td #{pkg.relace}
+         td 
+          a(href="../delObjeto/#{JSON.parse(package)[0]._id}/#{pkg._id}") 
+           span(class="glyphicon glyphicon-trash")

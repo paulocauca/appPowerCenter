@@ -1,0 +1,6 @@
+set linesize 1000 ;
+
+SELECT '{"mapping_id" : "' || MAPPING_ID || '","mapping_name" : "' || MAPPING_NAME || '"},'
+FROM OPB_MAPPING
+    WHERE SUBJECT_ID = &1   AND IS_VISIBLE = 1
+GROUP BY MAPPING_ID,MAPPING_NAME ORDER BY MAPPING_NAME;

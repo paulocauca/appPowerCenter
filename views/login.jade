@@ -1,0 +1,19 @@
+doctype 5
+html
+   head
+      title= title
+      link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+      link(rel='stylesheet', href='/stylesheets/bootstrap-theme.css')
+      link(rel='script', href='/javascript/bootstrap.min.js')
+body
+   div(class="page-header" align="center")
+      h2 Favor realizar seu login
+   div(class="center-block" align="center")
+      fieldset
+         if invalid
+            .list-group-item-danger Por favor entrar com uma matricula válida.
+      form(class="form-inline" role="form" ,method='post', action='/login', enctype='application/x-www-form-urlencoded')
+         div(class="form-group")
+            input#matricula(class="form-control" placeholder="Matricula" name='matricula')
+            input#senha(class="form-control" placeholder="Senha" name='senha' type='password')
+            button(class="btn btn-default",type='submit', onClick="location.href = '/login'") Login

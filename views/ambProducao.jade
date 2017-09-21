@@ -1,0 +1,19 @@
+extends layout
+
+block content
+
+  div(class="row")
+   div(align="center")
+      form(method="post", id="formShowLog" class="form-inline" role="form")
+       div(class="form-group")
+        select(class="form-control" name="optionPowerCenter" id="optionPowerCenter")
+         option(value="") ..:: Escolha ::..
+         option(value="showLog") Log Power Center
+        input(type="text" size="50%" class="form-control" id="inputFolder" placeholder="Folder" name="inputFolder" )
+        input(type="text" size="50%" class="form-control" id="inputWf" placeholder="WF" name="inputWf" )
+       div(class="form-group")
+        button(class="btn btn-default" type="button" onclick="verificaEscolha()")
+         span(class="glyphicon glyphicon-search")
+  div(class="row")
+      div(align="center")
+       div(id="resultFeeder" class="text-left col-sm-10")
