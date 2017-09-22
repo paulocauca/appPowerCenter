@@ -22,7 +22,7 @@ function verificaEscolha(){
 }
 
 function showLog(){
-	var output = ''	
+	var output = ''	;
 	
 	$.post('showLogPowerCenter/', {
 							folder : folder,
@@ -44,5 +44,75 @@ function showLog(){
 							
 	})
 					
+}
+
+
+function showModifiedProcess() {
+
+    var output = '';
+
+    $.post('showModifiedProcess/', {
+        wf : wf
+    }, function (data,status) {
+
+
+
+        data = data.split('], [');
+
+
+    	output = '';
+        output += '<table class="table">' +
+			'<th>FOLDER</th>' +
+			'<th>COMENTARIO</th>' +
+			'<th>OBJ</th>' +
+			'<th>TIPO</th>' +
+			'<th>VERSION</th>' +
+			'<th>MACHINE</th>' +
+			'<th>DATE</th>';
+
+
+        $.each(data, function( i, value ) {
+
+        	value = value.split(',');
+
+        	output += '<tr>';
+			output += '<td>'+ value[0].replace("[[","").replace(/'/g,"") +'</td>';
+			output += '<td>'+ value[1].replace(/'/g,"") +'</td>';
+			output += '<td>'+ value[2].replace(/'/g,"") +'</td>';
+			output += '<td>'+ value[3].replace(/'/g,"") +'</td>';
+			output += '<td>'+ value[4].replace(/'/g,"") +'</td>';
+			output += '<td>'+ value[5].replace(/'/g,"") +'</td>';
+			output += '<td>'+ value[6].replace("]]","").replace(/'/g,"") +'</td>';
+        	output += '</tr>';
+
+        });
+
+
+        // $.each(data, function( i, value ) {
+        //     console.log(value[4]);
+        //
+        //     output += '<h4><strong><code >' + value + '</code></strong></h4>'
+        //
+        // });
+
+
+        // $.each(data, function( i, value ) {
+        //
+        //
+        //     if(value.match(/ORA-/)){
+        //         output += '<h4><strong><code >' + value + '</code></strong></h4>'
+        //
+        //     }else{
+        //         output += '<h6><samp>' + value + '</samp></h6>'
+        //     }
+        // });
+
+        output += '</table>';
+
+        $('#resultFeeder').html(output);
+
+    })
+
+
 }
 

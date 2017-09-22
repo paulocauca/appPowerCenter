@@ -30,6 +30,26 @@ module.exports = function(app){
 			});
 			
 			
-	 })
+	 });
+
+    app.post('/showModifiedProcess',  function(req, res, next){
+
+
+        console.log(req.body.wf);
+
+        child = exec("sh /app/server/portal/appPowerCenter/scripts/realiza_check_process.sh " + req.body.wf, function (error, stdout, stderr) {
+
+            //  sys.print('stdout: ' + stdout);
+
+            if (error !== null) {
+                console.log('exec error: ' + error);
+            }
+            //console.log(stdout);
+            res.end(stdout);
+
+        });
+
+
+    })
 	
 };
