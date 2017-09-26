@@ -14,42 +14,41 @@ module.exports = function(app){
 				});
 	});
 	
-	 app.post('/showLogPowerCenter',  function(req, res, next){	
-			
-			child = exec("sh /app/server/scripts/show_log_powercenter.sh " + req.body.folder + " " + req.body.wf, function (error, stdout, stderr) {
-							
-			//  sys.print('stdout: ' + stdout);
+	 app.post('/showLogPowerCenter',  function(req, res, next){
 
+			child = exec("sh /app/server/scripts/show_log_powercenter.sh " + req.body.folder + " " + req.body.wf,{maxBuffer: 1024 * 1000}, function (error, stdout, stderr) {
 			  if (error !== null) {
 				console.log('exec error: ' + error);
 			  }
-			  
-			//console.log(stdout);
             res.end(stdout);
-
 			});
-			
-			
 	 });
 
     app.post('/showModifiedProcess',  function(req, res, next){
-
-
-        console.log(req.body.wf);
-
-        child = exec("sh /app/server/portal/appPowerCenter/scripts/realiza_check_process.sh " + req.body.wf, function (error, stdout, stderr) {
-
-            //  sys.print('stdout: ' + stdout);
-
+        child = exec("sh /app/server/portal/appPowerCenter/scripts/realiza_check_process.sh " + req.body.wf,{maxBuffer: 1024 * 500}, function (error, stdout, stderr) {
             if (error !== null) {
                 console.log('exec error: ' + error);
             }
-            //console.log(stdout);
             res.end(stdout);
-
         });
+    });
 
+    app.post('/checkConnection',  function(req, res, next){
+        child = exec("sh /app/server/portal/appPowerCenter/scripts/realiza_check_connections.sh " + req.body.connection, function (error, stdout, stderr) {
+            if (error !== null) {
+                console.log('exec error: ' + error);
+            }
+            res.end(stdout);
+        });
+    });
 
-    })
+    app.post('/checkProcessConnection',  function(req, res, next){
+        child = exec("sh /app/server/portal/appPowerCenter/scripts/realiza_check_process_connection.sh " + req.body.connection, {maxBuffer: 1024 * 1000}, function (error, stdout, stderr) {
+            if (error !== null) {
+                console.log('exec error: ' + error);
+            }
+            res.end(stdout);
+        });
+    });
 	
 };
